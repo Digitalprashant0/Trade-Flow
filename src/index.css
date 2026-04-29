@@ -1,0 +1,186 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+    --font-heading: var(--font-sans);
+    --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+    /* Updated Color Palette */
+    --color-accent: #F1F5F9;
+    --color-secondary: #64748B;
+    --color-stroke: #E2E8F0;
+    --color-gray-main: #8B949E;
+    --color-gray-light: #F8FAFC;
+    --color-bg-app: #FFFFFF;
+    --color-bg-label: #F1F5F9;
+    --color-black-main: #0F172A;
+    
+    /* Semantic Colors */
+    --color-primary: #1A73E8;
+    --color-success: #16C784;
+    --color-success-bg: #E7FAF3;
+    --color-destructive: #EA3943;
+    --color-destructive-bg: #FEECEE;
+    --color-warning: #F7931A;
+    --color-warning-bg: #FFF4E6;
+    --color-info: #1A73E8;
+
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+    --color-chart-5: var(--chart-5);
+    --color-chart-4: var(--chart-4);
+    --color-chart-3: var(--chart-3);
+    --color-chart-2: var(--chart-2);
+    --color-chart-1: var(--chart-1);
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --color-foreground: var(--foreground);
+    --color-background: var(--background);
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+
+    @keyframes marquee {
+        from { transform: translateX(0); }
+        to { transform: translateX(calc(-100% - var(--gap))); }
+    }
+    @keyframes marquee-vertical {
+        from { transform: translateY(0); }
+        to { transform: translateY(calc(-100% - var(--gap))); }
+    }
+    --animate-marquee: marquee var(--duration) linear infinite;
+    --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
+
+    @keyframes meteor {
+        0% { transform: rotate(215deg) translateX(0); opacity: 1; }
+        70% { opacity: 1; }
+        100% { transform: rotate(215deg) translateX(-500px); opacity: 0; }
+    }
+    --animate-meteor: meteor 5s linear infinite;
+
+    @keyframes border-beam {
+        100% { offset-distance: 100%; }
+    }
+    --animate-border-beam: border-beam var(--duration) infinite linear;
+
+    @keyframes ripple {
+        0%, 100% { transform: translate(-50%, -50%) scale(1); }
+        50% { transform: translate(-50%, -50%) scale(0.9); }
+    }
+    --animate-ripple: ripple var(--duration, 2s) ease calc(var(--i, 0) * 0.2s) infinite;
+
+    @keyframes spin-slow {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    --animate-spin-slow: spin-slow 3s linear infinite;
+}
+
+:root {
+    --background: #FFFFFF;
+    --foreground: #0F172A;
+    --card: #FFFFFF;
+    --card-foreground: #0F172A;
+    --popover: #FFFFFF;
+    --popover-foreground: #0F172A;
+    --primary: #1A73E8;
+    --primary-foreground: #FFFFFF;
+    --secondary: #F1F5F9;
+    --secondary-foreground: #0F172A;
+    --muted: #F8FAFC;
+    --muted-foreground: #64748B;
+    --accent: #F1F5F9;
+    --accent-foreground: #0F172A;
+    --destructive: #EA3943;
+    --border: #E2E8F0;
+    --input: #E2E8F0;
+    --ring: #1A73E8;
+    --chart-1: #1A73E8;
+    --chart-2: #16C784;
+    --chart-3: #F7931A;
+    --chart-4: #64748B;
+    --chart-5: #0F172A;
+    --radius: 0.75rem;
+    --sidebar: #FFFFFF;
+    --sidebar-foreground: #0F172A;
+    --sidebar-primary: #1A73E8;
+    --sidebar-primary-foreground: #FFFFFF;
+    --sidebar-accent: #F1F5F9;
+    --sidebar-accent-foreground: #0F172A;
+    --sidebar-border: #E2E8F0;
+    --sidebar-ring: #1A73E8;
+}
+
+.dark {
+    --background: #0D1117;
+    --foreground: #E6EDF3;
+    --card: #161B22;
+    --card-foreground: #E6EDF3;
+    --popover: #161B22;
+    --popover-foreground: #E6EDF3;
+    --primary: #1A73E8;
+    --primary-foreground: #FFFFFF;
+    --secondary: #2A2F36;
+    --secondary-foreground: #E6EDF3;
+    --muted: #161B22;
+    --muted-foreground: #8B949E;
+    --accent: #2A2F36;
+    --accent-foreground: #E6EDF3;
+    --destructive: #EA3943;
+    --border: #2A2F36;
+    --input: #2A2F36;
+    --ring: #1A73E8;
+    --sidebar: #161B22;
+    --sidebar-foreground: #E6EDF3;
+    --sidebar-primary: #1A73E8;
+    --sidebar-primary-foreground: #FFFFFF;
+    --sidebar-accent: #2A2F36;
+    --sidebar-accent-foreground: #E6EDF3;
+    --sidebar-border: #2A2F36;
+    --sidebar-ring: #1A73E8;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    }
+  body {
+    @apply bg-background text-foreground antialiased;
+    min-height: 100vh;
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(26, 115, 232, 0.03) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(22, 199, 132, 0.03) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(247, 147, 26, 0.03) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, rgba(234, 57, 67, 0.03) 0px, transparent 50%);
+    background-attachment: fixed;
+    }
+  html {
+    @apply font-sans;
+    }
+}

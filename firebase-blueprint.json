@@ -1,0 +1,51 @@
+{
+  "entities": {
+    "Trade": {
+      "title": "Trade",
+      "description": "A single trading position",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "ticker": { "type": "string" },
+        "direction": { "type": "string", "enum": ["LONG", "SHORT"] },
+        "status": { "type": "string", "enum": ["OPEN", "CLOSED"] },
+        "entryDate": { "type": "string", "format": "date-time" },
+        "exitDate": { "type": "string", "format": "date-time" },
+        "entryPrice": { "type": "number" },
+        "exitPrice": { "type": "number" },
+        "quantity": { "type": "number" },
+        "stopLoss": { "type": "number" },
+        "takeProfit": { "type": "number" },
+        "notes": { "type": "string" },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "exchange": { "type": "string", "enum": ["NSE", "BSE"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "ticker", "direction", "status", "entryDate", "entryPrice", "quantity", "exchange"]
+    },
+    "FundTransaction": {
+      "title": "Fund Transaction",
+      "description": "A deposit or withdrawal",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "type": { "type": "string", "enum": ["DEPOSIT", "WITHDRAWAL"] },
+        "amount": { "type": "number" },
+        "date": { "type": "string", "format": "date-time" },
+        "note": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "type", "amount", "date"]
+    }
+  },
+  "firestore": {
+    "/trades/{tradeId}": {
+      "schema": "Trade",
+      "description": "User's trade logs"
+    },
+    "/transactions/{transactionId}": {
+      "schema": "FundTransaction",
+      "description": "User's fund transactions"
+    }
+  }
+}

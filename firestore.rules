@@ -1,0 +1,55 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function isValidTrade(data) {
+      return data.userId == request.auth.uid
+        && data.ticker is string && data.ticker.size() <= 20
+        && data.direction in ['LONG', 'SHORT']
+        && data.status in ['OPEN', 'CLOSED']
+        && data.entryPrice is number && data.entryPrice > 0
+        && data.quantity is number && data.quantity > 0
+        && data.exchange in ['NSE', 'BSE'];
+    }
+
+    function isValidTransaction(data) {
+      return data.userId == request.auth.uid
+        && data.type in ['DEPOSIT', 'WITHDRAWAL']
+        && data.amount is number && data.amount > 0;
+    }
+
+    match /trades/{tradeId} {
+      allow create: if isSignedIn() && isValidTrade(request.resource.data);
+      allow get: if isOwner(resource.data.userId);
+      allow list: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow update: if isOwner(resource.data.userId) && isValidTrade(request.resource.data)
+        && (request.resource.data.userId == resource.data.userId);
+      allow delete: if isOwner(resource.data.userId);
+    }
+
+    match /transactions/{transactionId} {
+      allow create: if isSignedIn() && isValidTransaction(request.resource.data);
+      allow get: if isOwner(resource.data.userId);
+      allow list: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow update: if isOwner(resource.data.userId) && isValidTransaction(request.resource.data)
+        && (request.resource.data.userId == resource.data.userId);
+      allow delete: if isOwner(resource.data.userId);
+    }
+  }
+}

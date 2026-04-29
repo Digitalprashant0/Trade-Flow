@@ -1,0 +1,6 @@
+{
+  "name": "TradeFlow",
+  "description": "Professional trading journal with Zerodha charge calculations, portfolio tracking, and advanced analytics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["firebase", "auth", "firestore", "charts"]
+}
